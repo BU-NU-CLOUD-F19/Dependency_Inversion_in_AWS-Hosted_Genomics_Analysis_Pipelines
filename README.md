@@ -99,8 +99,33 @@ Stretch goals are:
 
 ## 6. Release Planning:
 
-Release planning section describes how the project will deliver incremental sets of features and functions in a series of releases to completion. Identification of user stories associated with iterations that will ease/guide sprint planning sessions is encouraged. Higher level details for the first iteration is expected.
+[Detailed user stories and plans are on the Github projects board](https://github.com/BU-NU-CLOUD-F19/Dependency_Inversion_in_AWS-Hosted_Genomics_Analysis_Pipelines/projects/1)
 
-Detailed user stories and plans are on the Github projects board: 
-https://trello.com/b/4EbylOXI/example-trello-board-for-moc-ui
+
+Feature: collection of user stories
+
+
+    Feature 0. The team is on-board with the project.
+    Feature 1. AWS plan that preserves the existing Hail-Seqr infrastructure (basically making a final decision on what services/containerization to use)
+    Feature 2. SeqrBackendService implementation on AWS Lambda
+    Feature 3. Partial translation of Seqr requests to GOR queries for the SeqrBackendService
+    Feature 4. Changes to Seqr UI to accommodate 2 and 3
+    Feature 5. Thorough regression testing.
+
+Release #1 (due by Week 5):
+
+    Feature 1: AWS plan that preserves the existing Hail-Seqr infrastructure
+Release #2 (due by Week 7):
+
+    Feature 2: SeqrBackendService implementation on AWS Lambda
+Release #3 (due by Week 9):
+
+    Feature 3: Partial translation of Seqr requests to GOR
+Release #4 (due by Week 11):
+
+    Feature 4: Seqr UI changes
+Release #5 (due by Week 13):
+
+    Feature 5: Regression testing
+
 
