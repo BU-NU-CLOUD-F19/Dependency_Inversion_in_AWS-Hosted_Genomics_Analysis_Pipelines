@@ -82,8 +82,25 @@ Replace the existing preparation service Hail with API calls to a new service Wu
 
 ## 5. Acceptance criteria
 
+Minimum acceptance criteria is:
+- At the completion of this project, the current Hail-Seqr software can be run normally.
+- A small subset of Seqr genomic analyses are implemented in GOR, with results that agree with the Hail implementation. BCH will provide the GOR code needed.
+- The Seqr UI has an option to choose Hail or GOR. If a user tries to run a Seqr function on GOR that does not have an implementation, the error should be handled cleanly and with proper logging.
+- The SeqrBackendService is written and implemented in a way that allows us to easily add additional backend implementations beyond Hail and GOR.
+- Hail and its Spark cluster should generally be kept running on as small and as few nodes as possible.
+- BCH security policies are respected with good IAM practices.
+
+Stretch goals are:
+- Keep Hail/Spark at a “low burn” (a few relatively small nodes) unless it’s really needed.
+- More GOR queries supported or fully replacing Hail with GOR
+- Start to define a way to compare Hail and GOR on certain Seqr command
+
+
 
 ## 6. Release Planning:
 
+Release planning section describes how the project will deliver incremental sets of features and functions in a series of releases to completion. Identification of user stories associated with iterations that will ease/guide sprint planning sessions is encouraged. Higher level details for the first iteration is expected.
 
+Detailed user stories and plans are on the Github projects board: 
+https://trello.com/b/4EbylOXI/example-trello-board-for-moc-ui
 
