@@ -129,3 +129,18 @@ Release #5 (due by Week 13):
     Feature 5: Regression testing
 
 
+## 7. Open Questions & Risks:
+More detail of deployment of the project.
+
+    Since the end goal of this project is to isolate different part of the application.
+    And right now each part is running on a same server, we need to have information about how the system got deployed.
+    Also to deploy each part onto different AWS server needs more attention to sercuity which we haven't touched it right now.
+
+How can we make use of AWS considering the data protection policy which prevents us from getting real data? How can we create testing data?
+    
+    All the data right now in Elasticsearch is credential regarding the patients' genome information.
+    Also the AWS account we are about to use is a sandbox account (haven't provided yet) which we shouldn't get access to any of the real data.
+    This will potentially cause some problems: even we have implemented the middleware, it's hard to test it well.
+    We will need more discussion for a more clearer test goal.
+
+[first demo 9/27](https://docs.google.com/presentation/d/1kbRdJbfWmAZOpKtKjGDg_-BeuQq4aN98ZTA1bTgy2UM/mobilepresent?slide=id.p)
