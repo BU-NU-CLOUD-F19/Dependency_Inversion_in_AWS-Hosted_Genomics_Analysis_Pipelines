@@ -72,7 +72,7 @@ Replace the existing preparation service Hail with API calls to a new service Wu
 In the current system, web application Seqr, communicates with ElasticSearch index which stores genome mutant information of patients. Seqr searches against ElasticSearch with a patient’s ID, and if ElasticSearch already has this record, it will return with the corresponding data; otherwise, it tells Hail, which is a data analysis tool, to generate information of this patient then passes to ElasticSearch, finally to Seqr user interface.
 
 ### Desired Architecture
-![DesiredArchitecture](https://github.com/BU-NU-CLOUD-F19/Dependency_Inversion_in_AWS-Hosted_Genomics_Analysis_Pipelines/blob/master/Documents/Images/DesiredArchitecture1.png)![DesiredArchitecture](https://github.com/BU-NU-CLOUD-F19/Dependency_Inversion_in_AWS-Hosted_Genomics_Analysis_Pipelines/blob/master/Documents/Images/DesiredArchitecture2.png)
+![DesiredArchitecture](https://github.com/BU-NU-CLOUD-F19/Dependency_Inversion_in_AWS-Hosted_Genomics_Analysis_Pipelines/blob/master/Documents/Images/DesiredArchitecture.png)
 
 The proposed architecture achieves the following things:
 
