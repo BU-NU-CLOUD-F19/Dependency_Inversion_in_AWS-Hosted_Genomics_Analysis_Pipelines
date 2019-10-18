@@ -1,0 +1,17 @@
+{
+  "Type" : "AWS::Lambda::Function",
+  "Properties" : {
+      "Code": {
+            "S3Bucket": "bch-seqr-student-test-bucket",
+            "S3Key": "aws-lambda-scala_2.13-0.1.0-SNAPSHOT.jar"
+        },
+      "Description" : "Sample JSON for AWS Lambda",
+      "Handler" : "seqrdepdency.testapp.ScalaLambda::handleRequest",
+      "MemorySize" : "256",
+      "Role" : "arn:aws:iam::771890318051:role/service-role/testScala-role-cjyc0iau",
+      "Runtime" : "java8",
+      "TracingConfig": {
+            "Mode": "Active"
+        }
+    }
+}
