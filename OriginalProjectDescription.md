@@ -146,6 +146,3 @@ How can we make use of AWS considering the data protection policy which prevents
     Also the AWS account we are about to use is a sandbox account (haven't provided yet) which we shouldn't get access to any of the real data.
     This will potentially cause some problems: even we have implemented the middleware, it's hard to test it well.
     We will need more discussion for a more clearer test goal.
-
-[Demo 1 9/27](https://docs.google.com/presentation/d/1kbRdJbfWmAZOpKtKjGDg_-BeuQq4aN98ZTA1bTgy2UM/mobilepresent?slide=id.p)
-[Demo 2 10/18](https://docs.google.com/presentation/d/1p-TAPB-HI3H54gJiI1e3OhUAuYGKGwkuH1gjtziXasE/mobilepresent?slide=id.p)
