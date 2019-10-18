@@ -169,4 +169,5 @@ How can we make use of AWS considering the data protection policy which prevents
     We will need more discussion for a more clearer test goal.
 
 [Demo 1 9/27](https://docs.google.com/presentation/d/1kbRdJbfWmAZOpKtKjGDg_-BeuQq4aN98ZTA1bTgy2UM/mobilepresent?slide=id.p)
+
 [Demo 2 10/18](https://docs.google.com/presentation/d/1p-TAPB-HI3H54gJiI1e3OhUAuYGKGwkuH1gjtziXasE/mobilepresent?slide=id.p)
