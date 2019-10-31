@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="sbt 1" modules="seqrdependencylambdaservice-master_8924" />
+    <profile name="sbt 1" modules="seqrdependencylambdaservice-master_6913" />
+    <profile name="sbt 2" modules="aws-lambda-scala">
+      <option name="deprecationWarnings" value="true" />
+      <option name="uncheckedWarnings" value="true" />
+    </profile>
   </component>
 </project>
