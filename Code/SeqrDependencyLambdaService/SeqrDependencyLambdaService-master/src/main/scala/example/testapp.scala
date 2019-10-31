@@ -2,6 +2,7 @@ package example
 
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 
+
 class ScalaLambda extends RequestHandler[String, String] {
     override def handleRequest(event: String, context: Context): String = {
 
@@ -9,13 +10,12 @@ class ScalaLambda extends RequestHandler[String, String] {
         // input is:     "1,100,500,Wuxi"
         val args = event.split(",")
 
-        if (args(3).equalsIgnoreCase("WUXI")) {
-            // query format: gor -p chr1:111371-563625
-            return "gor -p chr" + args(0) + ":" + args(1) + "-" + args(2) + " #dbsnp#"
-        } else if (args(3).equalsIgnoreCase("HAIL")) {
-            return "Using Hail"
-        }
-
-        return "Error Service"
+    if (args(2).equalsIgnoreCase("WUXI")) {
+        return "Using Wuxi"
+    } else if (args(2).equalsIgnoreCase("HAIL")) {
+        val content = scala.io.Source.fromURL("https://search-test2-hnkwuh5gdzna4fwynnbelmggkq.us-east-2.es.amazonaws.com/_search").mkString
+        return content
+    }
+    return "Error Service"
     }
 }
