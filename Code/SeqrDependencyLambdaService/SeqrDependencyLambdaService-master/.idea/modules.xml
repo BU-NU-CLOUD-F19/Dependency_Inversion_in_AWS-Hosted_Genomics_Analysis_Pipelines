@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/seqrdependencylambdaservice-master_8924.iml" filepath="$PROJECT_DIR$/.idea/modules/seqrdependencylambdaservice-master_8924.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/seqrdependencylambdaservice-master_8924-build.iml" filepath="$PROJECT_DIR$/.idea/modules/seqrdependencylambdaservice-master_8924-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/aws-lambda-scala.iml" filepath="$PROJECT_DIR$/.idea/modules/aws-lambda-scala.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/aws-lambda-scala-build.iml" filepath="$PROJECT_DIR$/.idea/modules/aws-lambda-scala-build.iml" />
     </modules>
   </component>
 </project>
