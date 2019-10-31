@@ -2,6 +2,7 @@ package example
 
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 
+
 class ScalaLambda extends RequestHandler[String, String] {
     override def handleRequest(event: String, context: Context): String = {
 
@@ -34,8 +35,11 @@ class ScalaLambda extends RequestHandler[String, String] {
           //return "GET test1/_search\n{\n  \"query\": {\n    \"bool\" : {\n      \"must\" : [\n        {\"match\" : {\"locus.contig\" : \"" + args(0) + "\"}},\n        {\"range\" : \n          {\n            \"locus.position\" : {\n              \"gte\" : " + args(1) + ",\n              \"lt\" : " + args(2) + "\n            }\n          }\n        }\n      ]\n    }\n  }\n}"
 
           //return "{\"query\" : {\"bool\" : {\"must\" : [ {\"match\" : {\"locus.contig\" : \"" + args(0) + "\"}}, {\"range\" :  {\"locus.position\" : {\"gte\" : " + args(1) + ", \"lt\" : " + args(2) + "}}}]}}}"
-          val url = "curl -X GET \"https://search-test2-hnkwuh5gdzna4fwynnbelmggkq.us-east-2.es.amazonaws.com/_search\" -H 'Content-Type: application/json' -d'\n{\n  \"query\": {\n    \"bool\" : {\n      \"must\" : [\n        {\"match\" : {\"locus.contig\" : " + args(0) + "}},\n        {\"range\" : \n          {\n            \"locus.position\" : {\n              \"gte\" : " + args(1) + ",\n              \"lt\" : " + args(2) + "\n            }\n          }\n        }\n      ]\n    }\n  }\n}'"
-          return url
+//          val url = "curl -X GET \"https://search-test2-hnkwuh5gdzna4fwynnbelmggkq.us-east-2.es.amazonaws.com/_search\" -H 'Content-Type: application/json' -d'\n{\n  \"query\": {\n    \"bool\" : {\n      \"must\" : [\n        {\"match\" : {\"locus.contig\" : " + args(0) + "}},\n        {\"range\" : \n          {\n            \"locus.position\" : {\n              \"gte\" : " + args(1) + ",\n              \"lt\" : " + args(2) + "\n            }\n          }\n        }\n      ]\n    }\n  }\n}'"
+//          return url
+
+          val content = scala.io.Source.fromURL("https://search-test2-hnkwuh5gdzna4fwynnbelmggkq.us-east-2.es.amazonaws.com/_search").mkString
+          return content
         }
         return "Error Service"
     }
