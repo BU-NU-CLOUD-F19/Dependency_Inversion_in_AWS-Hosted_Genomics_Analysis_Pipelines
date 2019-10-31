@@ -10,7 +10,7 @@ class ScalaLambda extends RequestHandler[String, String] {
 
 
     if (args(2).equalsIgnoreCase("WUXI")) {
-        return "Using Wuxi"
+        return "gor -p chr1:" + args(0) + "-" + args(1)
     } else if (args(2).equalsIgnoreCase("HAIL")) {
         return "Using Hail"
     }
