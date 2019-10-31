@@ -6,7 +6,7 @@ This is really a prototype, and for now just a Scala/AWS Lambda "Hello World."
 
 - Java 8
 
-- Scala 2.13 [I thiink versions > 2.11 should work fine]
+- Scala 2.13 [I think versions > 2.11 should work fine]
 
 ## Installation/deployment
 
