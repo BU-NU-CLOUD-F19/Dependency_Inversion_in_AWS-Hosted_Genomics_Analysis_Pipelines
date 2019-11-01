@@ -27,12 +27,12 @@
 ## 1. Vision and Goals Of The Project:
 
 Dependency Inversion in AWS-Hosted Genomics Analysis Pipelines will be the project to improve current computational analysis application of raw genetic data at Boston Childrens’ Hospital for end-users of the Research Team. The high-level goals of this project include:
--   Extend the current system to be compatible with another existing genomics analysis platform, WuXi NextCODE. 
+-   Extend the current system to be compatible with another existing genomics analysis platform, WuXi NextCODE.
 
 - Providing separation of the data analysis and preparation services which are often interlinked so that in the future, support team will be able to mix-and-match these services more flexibly, and in particular use any analysis service with one specific preparation service.
-    
+
 - Refactoring web application Seqr by building some interface or parameterized service class with calls to the WuXi NextCODE REST API, instead of making direct calls to a specific pipeline.
-    
+
 ## 2. Users/Personas Of The Project:
 
 This project will be used as part of the computational analysis application of raw genetic data by researchers. This project won’t be available in details to the researchers. Instead, it will only serve as an improved connection between the preparation and analysis services of the application and be available to Research Computing - Genomics Team for better future improvements on flexible mix-and-match the preparation service and analysis service.
@@ -40,13 +40,13 @@ This project will be used as part of the computational analysis application of r
 As a end-user of the application, I should be able to:
 
 -   Get data correctly.
-    
+
 -   Use this application the same way as before.
 
 As a developer, I should be able to:
 
 -   Add/Remove a genomics service flexibly.
-    
+
 -   Maintain the extended feature easily.
 
 
@@ -78,12 +78,12 @@ The proposed architecture achieves the following things:
 
 - Introduce an intermediate service class to relay the requests from the Seqr service to the Hail data analyze pipeline.
 - When the service class(SeqrBackendService) gets the request from web application Seqr, it would parse the requests and convert them into architecture specific commands.  
-- Once the requests have been modified, they can be sent to the preparation service of choice. 
+- Once the requests have been modified, they can be sent to the preparation service of choice.
 - The preparation service used to get the response must be hidden from the Seqr the web application.
 
 Below is a description of the system components that are building blocks of the architectural design:
 
-- seqr - web application that manages analyzed genetic data - makes it easier to search for specific mutations and diseases, manage patients within the same disease group. It consists of javascript + react.js on the client-side, python + django on the server-side. 
+- seqr - web application that manages analyzed genetic data - makes it easier to search for specific mutations and diseases, manage patients within the same disease group. It consists of javascript + react.js on the client-side, python + django on the server-side.
 - hail -  Spark application that analyzes genetic data - discovers mutations, associates diseases to mutations. It generates very large documents called "variant effect prediction" files, which are about 250MB per patient, and are loaded into Elasticsearch to make it easier to search for specific variants.
 - postgres - SQL database used by seqr and phenotips to store project metadata and user-generated content such as variant notes, etc.
 - phenotips - 3rd-party web-based form for entering structured phenotype data.
@@ -135,20 +135,22 @@ Release #1 (due by Week 5):
 Release #2 (due by Week 7):
 
     Work on AWS Lambda:
-    - Explore and learn AWS Lambda and AWS Cloudformation
-    - Try building a “hello world” Scala app on AWS Lambda and try using Cloudformation templates.
-    - Explore and learn current codebase, interfaces and endpoints
+    - Explore and learn AWS Lambda and AWS Cloudformation.
+    - Build a “hello world” Scala app on AWS Lambda and create Cloudformation templates.
+    - Explore and learn current codebase, interfaces and endpoints.
 
 Release #3 (due by Week 9):
 
     Implementation of SeqrBackendService:
-    - Explore and learn WuXi interfaces and endpoints APIs.
-    - Start development of SeqrBackendService in Scala on AWS Lambda
-    - Release #3 targets partial progress of SeqrBackendService
+    - Explore and learn GOR query and ElasticSearch query.
+    - Start development of SeqrBackendService in Scala on AWS Lambda.
+    - Manage to get parameters from input and generate GOR query / ElasticSearch query.
+    - Use http request to get query result from ElasticSearch.
 
 Release #4 (due by Week 11):
 
     Feature 4: Seqr UI changes
+
 Release #5 (due by Week 13):
 
     Feature 5: Regression testing
@@ -162,12 +164,14 @@ More detail of deployment of the project.
     Also to deploy each part onto different AWS server needs more attention to sercuity which we haven't touched it right now.
 
 How can we make use of AWS considering the data protection policy which prevents us from getting real data? How can we create testing data?
-    
+
     All the data right now in Elasticsearch is credential regarding the patients' genome information.
     Also the AWS account we are about to use is a sandbox account (haven't provided yet) which we shouldn't get access to any of the real data.
     This will potentially cause some problems: even we have implemented the middleware, it's hard to test it well.
     We will need more discussion for a more clearer test goal.
 
-[Demo 1 9/27](https://docs.google.com/presentation/d/1kbRdJbfWmAZOpKtKjGDg_-BeuQq4aN98ZTA1bTgy2UM/mobilepresent?slide=id.p)
+[Demo 1 09/27](https://docs.google.com/presentation/d/1kbRdJbfWmAZOpKtKjGDg_-BeuQq4aN98ZTA1bTgy2UM/mobilepresent?slide=id.p)
 
 [Demo 2 10/18](https://docs.google.com/presentation/d/1p-TAPB-HI3H54gJiI1e3OhUAuYGKGwkuH1gjtziXasE/mobilepresent?slide=id.p)
+
+[Demo 3 11/01](https://docs.google.com/presentation/d/1XBIoLBe7WZHM1i8O74fD5g4tOWFwnXuMDsbsaPwnn50/mobilepresent?slide=id.p)
