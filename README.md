@@ -175,3 +175,5 @@ How can we make use of AWS considering the data protection policy which prevents
 [Demo 2 10/18](https://docs.google.com/presentation/d/1p-TAPB-HI3H54gJiI1e3OhUAuYGKGwkuH1gjtziXasE/mobilepresent?slide=id.p)
 
 [Demo 3 11/01](https://docs.google.com/presentation/d/1XBIoLBe7WZHM1i8O74fD5g4tOWFwnXuMDsbsaPwnn50/mobilepresent?slide=id.p)
+
+[Demo 4 11/15](https://docs.google.com/presentation/d/1vQN4SpPEmAle3KCuUOLVh130pa_E_8hUJj70BEBuCkw/edit#slide=id.p)
