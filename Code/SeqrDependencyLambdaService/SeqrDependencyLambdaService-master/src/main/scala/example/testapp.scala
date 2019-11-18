@@ -4,6 +4,9 @@ package example
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder
 import com.amazonaws.services.secretsmanager.model._
+import main.scala.example.ExtractBinary
+
+import sys.process._
 
 class ScalaLambda extends RequestHandler[String, String] {
   override def handleRequest(event: String, context: Context): String = {
@@ -15,6 +18,7 @@ class ScalaLambda extends RequestHandler[String, String] {
     val args = event.split(",")
 
     if (args(3).equalsIgnoreCase("WUXI")) {
+
       val secretName: String = "TestSecret"
       val region: String = "us-east-2"
       var secret: String = null
@@ -48,8 +52,27 @@ class ScalaLambda extends RequestHandler[String, String] {
         secret = "Not working"
       }
 
-      // query format: gor -p chr1:111371-563625
-      return "gor -p chr" + args(0) + ":" + args(1) + "-" + args(2) + " #dbsnp#"
+      //Copy the binary bundled in the jar to /tmp in the local filesystem
+      ExtractBinary.copyToLocalFS("sample.exe", "/tmp/sample.exe")
+      println("Copied binary to jar execution directory !")
+
+      //chmod the binary with RWX permissions
+      val result0 = "chmod 777 /tmp/sample.exe"
+      val output0 = result0.!!
+
+      //invoke the binary and capture STDOUT
+      val result1 = "/tmp/sample.exe"
+      val output1 = result1.!!
+
+      //get some information about the ELF binary
+      val result2 = "file /tmp/sample.exe"
+      val output2 = result2.!!
+
+      val output = output1 + "\n *RUNNING* file /tmp/sample.exe \n" + output2
+      println("Output was :"+output)
+
+      return output
+      //return "gor -p chr" + args(0) + ":" + args(1) + "-" + args(2) + " #dbsnp#"
 
     } else if (args(3).equalsIgnoreCase("HAIL")) {
       /*GET test1/_search
