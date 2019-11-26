@@ -149,7 +149,7 @@ Release #3 (due by Week 9):
 
 Release #4 (due by Week 11):
 
-    Feature 4: Seqr UI changes
+    AWS SecretManager
 
 Release #5 (due by Week 13):
 
@@ -177,3 +177,5 @@ How can we make use of AWS considering the data protection policy which prevents
 [Demo 3 11/01](https://docs.google.com/presentation/d/1XBIoLBe7WZHM1i8O74fD5g4tOWFwnXuMDsbsaPwnn50/mobilepresent?slide=id.p)
 
 [Demo 4 11/15](https://docs.google.com/presentation/d/1vQN4SpPEmAle3KCuUOLVh130pa_E_8hUJj70BEBuCkw/edit#slide=id.p)
+
+[Demo 5 11/26](https://docs.google.com/presentation/d/1eLMdDYCho3b7L3LAu1DG-vOZEERpap2srKtTgI1c2OA/mobilepresent?slide=id.p)
