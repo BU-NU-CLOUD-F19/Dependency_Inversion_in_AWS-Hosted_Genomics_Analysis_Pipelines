@@ -1,0 +1,3 @@
+[submodule "seqr-bch-installation"]
+	path = seqr-bch-installation
+	url = https://github.com/nicklecompteBCH/seqr-bch-installation.git
