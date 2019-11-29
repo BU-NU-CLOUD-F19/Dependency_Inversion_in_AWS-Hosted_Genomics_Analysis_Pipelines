@@ -11,3 +11,7 @@ libraryDependencies += "com.amazonaws" % "aws-lambda-java-events" % "2.2.2"
 libraryDependencies += "org.elasticsearch.client" % "elasticsearch-rest-client" % "7.4.2"
 
 libraryDependencies += "com.amazonaws" % "aws-java-sdk-secretsmanager" % "1.11.442"
+
+libraryDependencies += "com.typesafe.play" % "play-json_2.11" % "2.5.5"
+
+unmanagedResourceDirectories in Compile += baseDirectory.value / "resources"

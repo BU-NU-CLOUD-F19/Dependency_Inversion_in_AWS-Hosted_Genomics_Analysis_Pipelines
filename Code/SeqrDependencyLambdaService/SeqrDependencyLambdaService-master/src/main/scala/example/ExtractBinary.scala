@@ -16,10 +16,11 @@ object ExtractBinary {
   def copyToLocalFS(packageBinaryPath: String, fsPath: String): Unit = {
     val output = new FileOutputStream(fsPath)
     val input = this.getClass.getClassLoader.getResourceAsStream(packageBinaryPath)
+    val bytes = new Array[Byte](2048) //1024 bytes - Buffer size
     Iterator
-      .continually (input.read)
-      .takeWhile (-1 !=)
-      .foreach (output.write)
+    .continually (input.read(bytes))
+    .takeWhile (-1 !=)
+    .foreach (read=>output.write(bytes,0,read))
     output.close()
     input.close()
   }

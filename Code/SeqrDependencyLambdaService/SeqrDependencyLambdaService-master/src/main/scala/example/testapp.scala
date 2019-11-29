@@ -5,7 +5,7 @@ import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder
 import com.amazonaws.services.secretsmanager.model._
 import main.scala.example.ExtractBinary
-
+import play.api.libs.json.Json
 import sys.process._
 
 class ScalaLambda extends RequestHandler[String, String] {
@@ -15,11 +15,9 @@ class ScalaLambda extends RequestHandler[String, String] {
 
     // input format: chr,min,max,service
     // input is:     "1,100,500,Wuxi"  or  "1,100,500,Hail"
-    val args = event.split(",")
-
     if (args(3).equalsIgnoreCase("WUXI")) {
 
-      val secretName: String = "TestSecret"
+      val secretName: String = "gordb_login"
       val region: String = "us-east-2"
       var secret: String = null
 
@@ -49,31 +47,28 @@ class ScalaLambda extends RequestHandler[String, String] {
         secret = getSecretValueResult.getSecretString()
       }
       else {
-        secret = "Not working"
+        return "Not working"
       }
+      
+      //Copy the zip bundled in the jar to /tmp in the local filesystem
+      ExtractBinary.copyToLocalFS("gordb1.zip", "/tmp/gordb.zip")
 
-      //Copy the binary bundled in the jar to /tmp in the local filesystem
-      ExtractBinary.copyToLocalFS("sample.exe", "/tmp/sample.exe")
-      println("Copied binary to jar execution directory !")
-
-      //chmod the binary with RWX permissions
-      val result0 = "chmod 777 /tmp/sample.exe"
-      val output0 = result0.!!
-
-      //invoke the binary and capture STDOUT
-      val result1 = "/tmp/sample.exe"
+      //extract the zip to /tmp
+      val result1 = "unzip /tmp/gordb.zip -d /tmp"
       val output1 = result1.!!
 
-      //get some information about the ELF binary
-      val result2 = "file /tmp/sample.exe"
-      val output2 = result2.!!
-
-      val output = output1 + "\n *RUNNING* file /tmp/sample.exe \n" + output2
-      println("Output was :"+output)
+      
+      //authenticate gordb
+      val secretsmap = (Json.parse(secret)).as[Map[String,String]]
+      val username = secretsmap("gordb_username")
+      val password = secretsmap("gordb_password")
+      
+      val rungordb = "/tmp/sm-clients-dist-7.1.7/bin/gordb login --allowpass --project=nanocourse --user='"+username+"/"+password+"' --site=connect.bchresearch.org"
+      
+      val output = rungordb.!!
 
       return output
       //return "gor -p chr" + args(0) + ":" + args(1) + "-" + args(2) + " #dbsnp#"
-
     } else if (args(3).equalsIgnoreCase("HAIL")) {
       /*GET test1/_search
         {
