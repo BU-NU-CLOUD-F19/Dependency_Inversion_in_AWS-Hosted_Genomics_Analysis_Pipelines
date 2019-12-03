@@ -15,6 +15,8 @@ class ScalaLambda extends RequestHandler[String, String] {
 
     // input format: chr,min,max,service
     // input is:     "1,100,500,Wuxi"  or  "1,100,500,Hail"
+    val args = event.split(",")
+
     if (args(3).equalsIgnoreCase("WUXI")) {
 
       val secretName: String = "gordb_login"
