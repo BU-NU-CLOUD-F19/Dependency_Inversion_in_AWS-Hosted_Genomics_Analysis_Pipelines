@@ -1,5 +1,11 @@
 package example
 
+import akka.actor.{ Actor, ActorRef, Props }
+import akka.io.{ IO, Tcp }
+import akka.util.ByteString
+import java.net.InetSocketAddress
+import akka.io.{ IO, Tcp }
+import context.system
 
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder
