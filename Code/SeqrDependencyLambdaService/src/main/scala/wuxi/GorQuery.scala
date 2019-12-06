@@ -1,12 +1,29 @@
 package SeqrDependencyService.wuxi
 
 import scala.util.parsing.json._
+import SeqrDependencyService.query._
+import SeqrDependencyService.genomics._
 
-class GorQuery(query_string: String, connection: GorConnection) {
+class GorQuery(query_string: String) extends GenomicQueryRepresentation[GorQuery] {
 
     var query_url : String = ""
 
-    def get_query_status() : Either[String,Exception] = {
+    def fromGenomicQuery(q:GenomicQuery) = {
+        var query_string = q match {
+            case PositionQuery(start: Int, end: Int, c: HumanChromosome) => {
+                "gor -p " + HumanChromosome.to_long_string(c) + ":" + (start.toString()) + ":" + (end.toString()) + " #wesVars#"
+            }
+            case InChromosomeQuery(c: HumanChromosome) => {
+                "gor -p " + HumanChromosome.to_long_string(c) + " #wesVars#"
+            }
+            case CombinedQuery(q: List[GenomicQuery]) => {
+                throw new NotImplementedError()
+            }
+        }
+        new GorQuery(query_string)
+    }
+
+    def get_query_status(connection: GorConnection) : Either[String,Exception] = {
         if (query_url == "") {
             Left("NOT YET SUBMITTED")
         }
@@ -32,7 +49,7 @@ class GorQuery(query_string: String, connection: GorConnection) {
         }
     }
 
-    def get_query_results() {
+    def get_query_results(connection: GorConnection) {
         val result_url = query_url + "offset=0&limit=10000"
         var tryresponse = connection.invoke_api_request("GET",Map(), result_url)
         tryresponse match {
@@ -51,7 +68,7 @@ class GorQuery(query_string: String, connection: GorConnection) {
         }
     }
 
-    def execute_query() : Either[String, Exception] = {
+    def execute_query(connection: GorConnection) : Either[String, Exception] = {
         val body = Map("query" -> query_string, "project" -> connection.project)
         val query_endpoint = (connection.endpoints) get "query"
         query_endpoint match {

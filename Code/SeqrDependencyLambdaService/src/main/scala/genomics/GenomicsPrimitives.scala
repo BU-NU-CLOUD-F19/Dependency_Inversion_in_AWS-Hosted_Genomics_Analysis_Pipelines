@@ -34,3 +34,38 @@ case object Chr22 extends HumanChromosome
 case object ChrX extends HumanChromosome
 case object ChrY extends HumanChromosome
 case object ChrM extends HumanChromosome
+
+object HumanChromosome {
+    def to_short_string(c: HumanChromosome) = {
+        c match {
+            case Chr1 => "1"
+            case Chr2 => "2"
+            case Chr3 => "3"
+            case Chr4 => "4"
+            case Chr5 => "5"
+            case Chr6 => "6"
+            case _ => throw new NotImplementedError()
+        }
+    }
+
+    def to_long_string(c: HumanChromosome) = {
+        c match {
+            case ChrX => "chrX"
+            case ChrY => "chrY"
+            case ChrM => "chrM"
+            case _ => c.toString().toLowerCase()
+        }
+    }
+
+    def fromShortString(s: String) : Option[HumanChromosome] = {
+        s match {
+            case "1" => Some(Chr1)
+            case "2" => Some(Chr2)
+            case "3" => Some(Chr3)
+            case "4" => Some(Chr4)
+            case "5" => Some(Chr5)
+            case "6" => Some(Chr6)
+            case _ => None
+        }
+    }
+}

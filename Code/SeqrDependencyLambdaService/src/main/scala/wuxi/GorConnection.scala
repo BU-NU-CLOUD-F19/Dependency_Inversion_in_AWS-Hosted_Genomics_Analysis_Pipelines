@@ -26,6 +26,10 @@ object GorConnection {
 
         }
     }
+
+    def create_default() : GorConnection = {
+        new GorConnection("","","")
+    }
 }
 
 case class GorConnection(api_key: String, project: String, application_url: String) {
