@@ -1,12 +1,5 @@
 package example
 
-import akka.actor.{ Actor, ActorRef, Props }
-import akka.io.{ IO, Tcp }
-import akka.util.ByteString
-import java.net.InetSocketAddress
-import akka.io.{ IO, Tcp }
-import context.system
-
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 import com.amazonaws.services.secretsmanager.AWSSecretsManagerClientBuilder
 import com.amazonaws.services.secretsmanager.model._
@@ -22,6 +15,9 @@ class ScalaLambda extends RequestHandler[String, String] {
     // input format: chr,min,max,service
     // input is:     "1,100,500,Wuxi"  or  "1,100,500,Hail"
     val args = event.split(",")
+    if (args.length < 4) {
+      return "Please make sure you have arguments for: chromosome, min, max, service"
+    }
 
     if (args(3).equalsIgnoreCase("WUXI")) {
 
@@ -55,7 +51,7 @@ class ScalaLambda extends RequestHandler[String, String] {
         secret = getSecretValueResult.getSecretString()
       }
       else {
-        return "Not working"
+        return "Credentials not working. Please check the configuration."
       }
       
       //Copy the zip bundled in the jar to /tmp in the local filesystem
@@ -102,6 +98,6 @@ class ScalaLambda extends RequestHandler[String, String] {
       val content = scala.io.Source.fromURL(url).mkString
       return content
     }
-    return "Error Service"
+    return "Service " + args(3) + " is not supported. Please contact support team."
   }
 }
