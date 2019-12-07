@@ -92,6 +92,7 @@ object GenomicQuery {
                             }
 
                         }
+                        case None => Right("Bad query: " + s)
                     }
                 }
             }

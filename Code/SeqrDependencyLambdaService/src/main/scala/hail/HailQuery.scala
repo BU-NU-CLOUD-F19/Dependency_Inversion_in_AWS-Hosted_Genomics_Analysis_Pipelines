@@ -21,5 +21,5 @@ object HailQuery extends GenomicQueryRepresentation[HailQuery] {
     }
 }
 
-case class HailQuery(query_string: String) {
+case class HailQuery(queryString: String) {
 }

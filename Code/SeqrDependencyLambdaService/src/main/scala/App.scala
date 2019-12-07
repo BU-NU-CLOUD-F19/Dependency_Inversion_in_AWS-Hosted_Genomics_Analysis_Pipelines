@@ -40,7 +40,7 @@ class SeqrDependencyLambdaService extends RequestHandler[String,String] {
                     }
                     case Hail => {
                         val testESEndpoint = "https://search-test2-hnkwuh5gdzna4fwynnbelmggkq.us-east-2.es.amazonaws.com/_search?"
-                        val postString = testESEndpoint + HailQuery.fromGenomicQuery(actualQuery)
+                        val postString = testESEndpoint + HailQuery.fromGenomicQuery(actualQuery).queryString
                         val content = scala.io.Source.fromURL(postString).mkString
                         content
                     }
