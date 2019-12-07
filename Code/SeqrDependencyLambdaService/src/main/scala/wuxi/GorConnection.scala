@@ -1,4 +1,4 @@
-package SeqrDependencyService.wuxi
+package seqrdependencylambdaservice.wuxi
 
 import scala.util.parsing.json._
 import io.lemonlabs.uri._

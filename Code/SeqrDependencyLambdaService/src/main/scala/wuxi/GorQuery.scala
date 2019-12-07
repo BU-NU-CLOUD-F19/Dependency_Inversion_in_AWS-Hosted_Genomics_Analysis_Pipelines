@@ -1,13 +1,10 @@
-package SeqrDependencyService.wuxi
+package seqrdependencylambdaservice.wuxi
 
 import scala.util.parsing.json._
-import SeqrDependencyService.query._
-import SeqrDependencyService.genomics._
+import seqrdependencylambdaservice.query._
+import seqrdependencylambdaservice.genomics._
 
-class GorQuery(query_string: String) extends GenomicQueryRepresentation[GorQuery] {
-
-    var query_url : String = ""
-
+object GorQuery extends GenomicQueryRepresentation[GorQuery] {
     def fromGenomicQuery(q:GenomicQuery) = {
         var query_string = q match {
             case PositionQuery(start: Int, end: Int, c: HumanChromosome) => {
@@ -22,6 +19,12 @@ class GorQuery(query_string: String) extends GenomicQueryRepresentation[GorQuery
         }
         new GorQuery(query_string)
     }
+}
+
+class GorQuery(query_string: String) {
+
+    var query_url : String = ""
+    val queryString = query_string
 
     def get_query_status(connection: GorConnection) : Either[String,Exception] = {
         if (query_url == "") {

@@ -1,4 +1,4 @@
-package SeqrDependencyService.genomics
+package seqrdependencylambdaservice.genomics
 
 case class Variant(
     chromosome: HumanChromosome,

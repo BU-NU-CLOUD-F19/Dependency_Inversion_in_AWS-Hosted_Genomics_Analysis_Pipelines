@@ -1,19 +1,17 @@
-package SeqrDependencyService.wuxi
+package seqrdependencylambdaservice.hail
 
 import scala.util.parsing.json._
-import SeqrDependencyService.query._
-import SeqrDependencyService.genomics._
+import seqrdependencylambdaservice.query._
+import seqrdependencylambdaservice.genomics._
 
-class HailQuery(query_string: String) extends GenomicQueryRepresentation[GorQuery] {
-
+object HailQuery extends GenomicQueryRepresentation[HailQuery] {
     def fromGenomicQuery(q:GenomicQuery) = {
         var query_string = q match {
             case PositionQuery(start: Int, end: Int, c: HumanChromosome) => {
-                throw new NotImplementedError()
-
+                "q=locus.contig" + (HumanChromosome.to_short_string(c)) + "%20AND%20locus.position:["+start.toString()+"+TO+"+end.toString() + "]&pretty"
             }
             case InChromosomeQuery(c: HumanChromosome) => {
-                throw new NotImplementedError()
+                "q=locus.contig" + (HumanChromosome.to_short_string(c)) + "&pretty"
             }
             case CombinedQuery(q: List[GenomicQuery]) => {
                 throw new NotImplementedError()
@@ -21,6 +19,7 @@ class HailQuery(query_string: String) extends GenomicQueryRepresentation[GorQuer
         }
         new HailQuery(query_string)
     }
+}
 
-
+case class HailQuery(query_string: String) {
 }
