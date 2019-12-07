@@ -31,7 +31,7 @@ object GenomicQuery {
             val queryTypePart = parts(0)
             val queryDetailsPart = parts(1)
             val implementationPart = parts(2)
-            val chromosomePattern : Regex = "Chromosome=(\\w+)".r
+            val chromosomePattern : Regex = "Chromosome=(\\w+)(?=PosStart)".r
             chromosomePattern.findFirstMatchIn(queryDetailsPart) match {
                 case None => Right("Bad query string: " + s)
                 case Some(chrStr) => {
@@ -53,12 +53,12 @@ object GenomicQuery {
                                             case e : Exception => None
                                         }
                                         tryPosStart match {
-                                            case None => Right("Bad query: " + s)
+                                            case None => Right("Could not get start position from string: " + firstPos.group(1) + "query is" + s)
                                             case Some(i) => {
                                                 val posEndPattern : Regex = "PosEnd=(\\d+)".r
                                                 posEndPattern.findFirstMatchIn(s) match {
                                                     case None => {
-                                                        Right("Bad query: " + s)
+                                                        Right("Start position without an end position not currently supported:" + s)
                                                     }
                                                     case Some(posEnd) => {
                                                         val tryPosEnd = try {
@@ -67,7 +67,7 @@ object GenomicQuery {
                                                             case e : Exception => None
                                                         }
                                                         tryPosEnd match {
-                                                            case None => Right("Bad query: " +s)
+                                                            case None => Right("Could not get end position from string: " + posEnd.group(1) + "query is" + s)
                                                             case Some(j) => {
                                                                 Left(PositionQuery(i,j,c))
                                                             }
