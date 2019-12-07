@@ -9,7 +9,7 @@ import java.net.InetSocketAddress
 import com.amazonaws.services.lambda.runtime.{Context, RequestHandler}
 //import main.scala.example.ExtractBinary
 import play.api.libs.json.Json
-//import sys.process._
+import sys.process._
 
 import seqrdependencylambdaservice.query._
 import seqrdependencylambdaservice.wuxi._
@@ -75,6 +75,38 @@ class SeqrDependencyLambdaService extends RequestHandler[String,String] {
                             }
                             case Left(s:String) => {
                                 "Successfully obtained secret for TestSecretManager: " + s
+                            }
+                        }
+                    }
+
+                    case WuxiExecutable => {
+                        // this will fail but we will leave it in for demonstration
+
+                        // Try to get the AWS ManagedSecret.
+                        // This will return either a string (the secret) or an Exception if something
+                        // went wrong on the AWS side (for instance, IAM not configured correctly)
+                        val tryCredentials = new ManagedSecret("gordb_login","us-east-2").Secret
+                        tryCredentials match {
+                            case Left(credString: String) => {
+
+                                //Copy the zip bundled in the jar to /tmp in the local filesystem
+                                ExtractBinary.copyToLocalFS("gordb1.zip", "/tmp/gordb.zip")
+                                //extract the zip to /tmp
+                                val result1 = "unzip /tmp/gordb.zip -d /tmp"
+                                val output1 = result1.!!
+
+                                //authenticate gordb
+                                val secretsmap = (Json.parse(credString)).as[Map[String,String]]
+                                val username = secretsmap("gordb_username")
+                                val password = secretsmap("gordb_password")
+                                // command to execute gor query
+                                val rungordb = "/tmp/sm-clients-dist-7.1.7/bin/gordb login --allowpass --project=nanocourse --user='"+username+"/"+password+"' --site=connect.bchresearch.org"
+                                val output = rungordb.!!
+                                output
+                            }
+                            case Right(e:Exception) => {
+                                // Print the error message to the user
+                                "Unhandled exception in accessing Secret Manager for GorDB authentication" + (e.toString())
                             }
                         }
                     }

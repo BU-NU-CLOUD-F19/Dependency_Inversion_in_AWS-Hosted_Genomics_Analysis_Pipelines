@@ -20,4 +20,4 @@ libraryDependencies += "com.amazonaws" % "aws-java-sdk-secretsmanager" % "1.11.4
 
 libraryDependencies += "com.typesafe.play" % "play-json_2.11" % "2.5.5"
 
-unmanagedResourceDirectories in Compile += baseDirectory.value / "resources"
+//unmanagedResourceDirectories in Compile += baseDirectory.value / "resources"

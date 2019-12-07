@@ -2,6 +2,7 @@ package seqrdependencylambdaservice.query
 
 import seqrdependencylambdaservice.genomics._
 import scala.util.matching.Regex
+import sys.process._
 
 sealed trait OrderingType
 case object LessThan extends OrderingType
@@ -19,21 +20,22 @@ sealed trait GenomicQueryImplementation
 case object Wuxi extends GenomicQueryImplementation
 case object Hail extends GenomicQueryImplementation
 case object TestSecretManager extends GenomicQueryImplementation
+case object WuxiExecutable extends GenomicQueryImplementation
 
 object GenomicQuery {
     // Synax: "[Variants/SNPs]:[Chromosome=x][PosStart=Y][PosEnd=Z]:[Hail/Wuxi/TestSecretManager]"
     def fromString(s: String) : Either[(GenomicQuery, GenomicQueryImplementation),String] = {
         val parts = s.split(":")
         if (parts.length != 3) {
-            Right("Bad query string: " + s)
+            Right("Bad query string: " + s + " \n  Please make sure you have arguments for: chromosome, start, end, service")
         }
         else {
             val queryTypePart = parts(0)
             val queryDetailsPart = parts(1)
             val implementationPart = parts(2)
-            val chromosomePattern : Regex = "Chromosome=(\\w+)(?=PosStart)".r
+            val chromosomePattern : Regex = "Chromosome=([\\d+XY])".r
             chromosomePattern.findFirstMatchIn(queryDetailsPart) match {
-                case None => Right("Bad query string: " + s)
+                case None => Right("Bad query string: " + s + " \n Could not find Chromosome")
                 case Some(chrStr) => {
                     val tryChromosome = HumanChromosome.fromShortString(chrStr.group(1))
                     tryChromosome match {
@@ -86,7 +88,8 @@ object GenomicQuery {
                                         case "Wuxi" => Left(actualQuery,Wuxi)
                                         case "Hail" => Left(actualQuery,Hail)
                                         case "TestSecretManager" => Left(actualQuery,TestSecretManager)
-                                        case _ => Right("Bad query: " + s)
+                                        case "WuxiExecutable" => Left(actualQuery,WuxiExecutable)
+                                        case _ => Right("Could not decipher implementation: " + implementationPart)
                                     }
                                 }
                             }
