@@ -27,7 +27,7 @@
 ## 1. Vision and Goals Of The Project:
 
 Dependency Inversion in AWS-Hosted Genomics Analysis Pipelines will be the project to improve current computational analysis application of raw genetic data at Boston Childrens’ Hospital for end-users of the Research Team. The high-level goals of this project include:
--   Extend the current system to be compatible with a preferred data analysis platform, WuXi NextCODE (which is much cheaper).
+-   Extend the current system to be compatible with a preferred data analysis platform, WuXi NextCODE (which is much cheaper). However, WuXi and Hail do use different algorithms for data processing and may give different results, so we need to be able to switch between them if needed.
 
 - Provide separation of the analysis and preparation services which are often interlinked so that the support team will be able to mix-and-match these services more flexibly in the future, and in particular use analysis service Seqr with one specific preparation service of choice.
 
@@ -45,7 +45,7 @@ As a end-user of the application, I should be able to:
 
 As a developer, I should be able to:
 
--   Add/Remove a genomics service flexibly.
+-   Add/Remove a genomics analysis service flexibly, without needing to change much code in the user-facing Seqr project.
 
 -   Maintain the extended feature easily.
 
@@ -54,7 +54,7 @@ As a developer, I should be able to:
 
 Make the existing preparation service Hail work with new data preparation service WuXi, depending on which service was chosen by end users. This work would involve a few steps:
 
-- Manage the request from web application Seqr by using a parameterized service class (SeqrBackendService) instead of making direct calls to a specific data preparation service. A particular focus of this work will be error-handling, since Seqr will not be able to directly monitor the state of Hail or WuXi.
+- Manage the request from web application Seqr by using a parameterized service class (SeqrBackendService) instead of making direct calls to a specific data preparation service.
 
 - Develop SeqrBackendService to parse requests from Seqr and converts them to architecture-specific commands.
 
@@ -107,7 +107,6 @@ Minimum acceptance criteria is:
 - BCH security policies are respected with good IAM practices.
 
 Stretch goals are:
-- Keep Hail/Spark at a “low burn” (a few relatively small nodes) unless it’s really needed.
 - More GOR queries supported or fully replacing Hail with GOR
 - Start to define a way to compare Hail and GOR on certain Seqr command
 
@@ -181,4 +180,6 @@ How can we make use of AWS considering the data protection policy which prevents
 
 [Demo 5 11/26](https://docs.google.com/presentation/d/1eLMdDYCho3b7L3LAu1DG-vOZEERpap2srKtTgI1c2OA/mobilepresent?slide=id.p)
 
-[Final presentation 12/7](https://docs.google.com/presentation/d/1ik_6MtLEdcTy71XP13QtSTH0RzwLFeG6bqBD2J_caXI/mobilepresent?slide=id.p)
+[Final presentation Slides 12/7](https://docs.google.com/presentation/d/1ik_6MtLEdcTy71XP13QtSTH0RzwLFeG6bqBD2J_caXI/mobilepresent?slide=id.p)
+
+[Final presentation Video 12/7](https://youtu.be/oZEKXTpdreA)
