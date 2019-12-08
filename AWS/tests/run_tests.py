@@ -11,45 +11,44 @@ def post_data(url, data):
     return requests.post(url, data).content
     
 def testcase_validGor(url):
-    resp = post_data(url, "\"1,100,200,Wuxi\"")
-    expected = b'"gor -p chr1:100-200 #dbsnp#"'
-    if resp ==  expected:
+    resp = post_data(url, "\"Variants:Chromosome=1PosStart=100PosEnd=200:Wuxi\"")
+    expected = "gor -p chr1:100:200 #wesVars#" # "GorDB credentials successfully obtained \nBCH and WuXi have not finished the REST API for this...\nQuery to be executed: gor -p chr1:100:200 #wesVars#\n"
+    if expected in str(resp):
         print("testcase_validGor PASSED !")
     else:
-    
-        print("testcase_validGor FAILED !");
-
+        print("testcase_validGor FAILED !" + str(resp));
+        
 def testcase_validHail(url):
-    resp = post_data(url, "\"1,100,200,Hail\"")
-    expected = b'"{\\n  \\"took\\" : 7,\\n  \\"timed_out\\" : false,\\n  \\"_shards\\" : {\\n    \\"total\\" : 6,\\n    \\"successful\\" : 6,\\n    \\"skipped\\" : 0,\\n    \\"failed\\" : 0\\n  },\\n  \\"hits\\" : {\\n    \\"total\\" : {\\n      \\"value\\" : 0,\\n      \\"relation\\" : \\"eq\\"\\n    },\\n    \\"max_score\\" : null,\\n    \\"hits\\" : [ ]\\n  }\\n}\\n"'
-    if resp ==  expected:
+    resp = str(post_data(url, "\"Variants:Chromosome=1PosStart=90000PosEnd=1000000:Hail\""))
+    if '\\\\"variant_class\\\\" : \\\\"deletion\\\\"\\\\n' in resp:
         print("testcase_validHail PASSED !")
+       # print(str(resp))
     else:
-        print(resp)
-        print("testcase_validHail FAILED !")
-
+        print("testcase_validHail FAILED ! ")
+        
 def testcase_invalidQuery1(url):
-    resp = post_data(url, "\"1:100:200\"")
-    expected = b'"Please make sure you have arguments for: chromosome, min, max, service"'
-    if resp ==  expected:
+    resp = str(post_data(url, "\"Variants:Chromosome=1PosStart=900000PosEnd=1000000\""))
+    expected = '"Bad query string: Variants:Chromosome=1PosStart=900000PosEnd=1000000 \n  Please make sure you have arguments for: chromosome, start, end, service"'
+    if "Bad query string" in resp and "Please make sure you have arguments for: chromosome, start, end, service" in resp:
         print("testcase_invalidQuery1 PASSED !")
     else:
         print(resp)
         print("testcase_invalidQuery1 FAILED !")
         
 def testcase_invalidQuery2(url):
-    resp = post_data(url, "\"1,100,200,NONSERVICE\"")
-    expected = b'"Service NONSERVICE is not supported. Please contact support team."'
-    if resp ==  expected:
-        print("testcase_invalidQuery1 PASSED !")
+    resp = str(post_data(url, "\"Variants:Chromosome=1PosStart=900000PosEnd=1000000:cat\""))
+    expected = 'b\'"Could not decipher implementation: cat"\''
+    if resp == expected:
+        print("testcase_invalidQuery2 PASSED !")
     else:
         print(resp)
-        print("testcase_invalidQuery1 FAILED !")
-
+        print("testcase_invalidQuery2 FAILED !")
+        
 def main():
     url = "https://qssvxiw6pk.execute-api.us-east-2.amazonaws.com/dev/lambdaservice"
     testcase_validGor(url)
     testcase_validHail(url)
     testcase_invalidQuery1(url)
     testcase_invalidQuery2(url)
+    
 if __name__ == '__main__': main()
