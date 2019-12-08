@@ -182,4 +182,4 @@ How can we make use of AWS considering the data protection policy which prevents
 
 [Final presentation Slides 12/7](https://docs.google.com/presentation/d/1ik_6MtLEdcTy71XP13QtSTH0RzwLFeG6bqBD2J_caXI/mobilepresent?slide=id.p)
 
-[Final presentation Video 12/7](https://youtu.be/oZEKXTpdreA)
+[Final presentation Video 12/7](https://youtu.be/iB_2rA_I_9U)
