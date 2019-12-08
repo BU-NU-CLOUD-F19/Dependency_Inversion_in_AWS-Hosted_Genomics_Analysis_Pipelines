@@ -27,34 +27,34 @@
 ## 1. Vision and Goals Of The Project:
 
 Dependency Inversion in AWS-Hosted Genomics Analysis Pipelines will be the project to improve current computational analysis application of raw genetic data at Boston Childrens’ Hospital for end-users of the Research Team. The high-level goals of this project include:
--   Extend the current system to be compatible with another existing genomics analysis platform, WuXi NextCODE.
+-   Extend the current system to be compatible with a preferred data analysis platform, WuXi NextCODE (which is much cheaper). However, WuXi and Hail do use different algorithms for data processing and may give different results, so we need to be able to switch between them if needed.
 
-- Providing separation of the data analysis and preparation services which are often interlinked so that in the future, support team will be able to mix-and-match these services more flexibly, and in particular use any analysis service with one specific preparation service.
+- Provide separation of the analysis and preparation services which are often interlinked so that the support team will be able to mix-and-match these services more flexibly in the future, and in particular use analysis service Seqr with one specific preparation service of choice.
 
-- Refactoring web application Seqr by building some interface or parameterized service class with calls to the WuXi NextCODE REST API, instead of making direct calls to a specific pipeline.
+- Introduce an intermediate service (SeqrBackendService) to manage the requests from the Seqr service and pass architecture specific commands to the data preparation service of choice according to the request.
 
 ## 2. Users/Personas Of The Project:
 
-This project will be used as part of the computational analysis application of raw genetic data by researchers. This project won’t be available in details to the researchers. Instead, it will only serve as an improved connection between the preparation and analysis services of the application and be available to Research Computing - Genomics Team for better future improvements on flexible mix-and-match the preparation service and analysis service.
+This project will be part of the system of the analysis of raw genetic data used by researchers. This project won’t be available in details to the researchers. Instead, it will only serve as an improved connection between the preparation and analysis services and be available to Research Computing - Genomics Team for better future improvements on flexible mix-and-match the preparation service and analysis service.
 
 As a end-user of the application, I should be able to:
 
--   Get data correctly.
+-   Get data result correctly.
 
 -   Use this application the same way as before.
 
 As a developer, I should be able to:
 
--   Add/Remove a genomics service flexibly.
+-   Add/Remove a genomics analysis service flexibly, without needing to change much code in the user-facing Seqr project.
 
 -   Maintain the extended feature easily.
 
 
 ## 3. Scope and Features Of The Project:
 
-Replace the existing preparation service Hail with API calls to a new service WuXi NextCODE. This work would involve a few steps:
+Make the existing preparation service Hail work with new data preparation service WuXi, depending on which service was chosen by end users. This work would involve a few steps:
 
-- Refactor web application Seqr analysis service into a parameterized service class, instead of making direct calls to a specific pipeline. A particular focus of this work will be error-handling, since Seqr will not be able to directly monitor the state of Hail or WuXi.
+- Manage the request from web application Seqr by using a parameterized service class (SeqrBackendService) instead of making direct calls to a specific data preparation service.
 
 - Develop SeqrBackendService to parse requests from Seqr and converts them to architecture-specific commands.
 
@@ -76,10 +76,10 @@ In the current system, web application Seqr, communicates with ElasticSearch ind
 
 The proposed architecture achieves the following things:
 
-- Introduce an intermediate service class to relay the requests from the Seqr service to the Hail data analyze pipeline.
-- When the service class(SeqrBackendService) gets the request from web application Seqr, it would parse the requests and convert them into architecture specific commands.  
-- Once the requests have been modified, they can be sent to the preparation service of choice.
-- The preparation service used to get the response must be hidden from the Seqr the web application.
+- Introduce an intermediate service class to relay the requests from the Seqr service.
+- The service class(SeqrBackendService) gets the request from web application Seqr.  
+- The service class parses the request and convert them into architecture specific commands.
+- These commands will be sent to the data preparation service of choice.
 
 Below is a description of the system components that are building blocks of the architectural design:
 
@@ -100,14 +100,13 @@ Below is a description of the system components that are building blocks of the 
 
 Minimum acceptance criteria is:
 
-- At the completion of this project, the current Hail-Seqr software can be run normally.
-- Implement SeqrBackendService in Scala running on AWS Lambda, which can consume abstract genomic queries and wrap them into GOR or Hail queries and call Hail or Wuxi NextCODE appropriately.
-- Error should be handled cleanly and with proper logging.
+- At the completion of this project, the current Hail-Seqr system can be run normally.
+- Implement SeqrBackendService in Scala running on AWS Lambda, which can consume genomic queries and wrap them into GOR or Elasticsearch queries and call a certain service appropriately.
+- Error should be handled cleanly and with proper notice.
 - The SeqrBackendService is written and implemented in a way that allows us to choose and easily add additional backend implementations beyond Hail and Wuxi NextCODE.
 - BCH security policies are respected with good IAM practices.
 
 Stretch goals are:
-- Keep Hail/Spark at a “low burn” (a few relatively small nodes) unless it’s really needed.
 - More GOR queries supported or fully replacing Hail with GOR
 - Start to define a way to compare Hail and GOR on certain Seqr command
 
@@ -149,11 +148,12 @@ Release #3 (due by Week 9):
 
 Release #4 (due by Week 11):
 
-    AWS SecretManager
+    AWS Secrets Manager
 
 Release #5 (due by Week 13):
 
-    Feature 5: Regression testing
+    - AWS API Gateway
+    - Feature 5: Regression testing
 
 
 ## 7. Open Questions & Risks:
@@ -179,3 +179,7 @@ How can we make use of AWS considering the data protection policy which prevents
 [Demo 4 11/15](https://docs.google.com/presentation/d/1vQN4SpPEmAle3KCuUOLVh130pa_E_8hUJj70BEBuCkw/edit#slide=id.p)
 
 [Demo 5 11/26](https://docs.google.com/presentation/d/1eLMdDYCho3b7L3LAu1DG-vOZEERpap2srKtTgI1c2OA/mobilepresent?slide=id.p)
+
+[Final presentation Slides 12/7](https://docs.google.com/presentation/d/1ik_6MtLEdcTy71XP13QtSTH0RzwLFeG6bqBD2J_caXI/mobilepresent?slide=id.p)
+
+[Final presentation Video 12/7](https://youtu.be/iB_2rA_I_9U)

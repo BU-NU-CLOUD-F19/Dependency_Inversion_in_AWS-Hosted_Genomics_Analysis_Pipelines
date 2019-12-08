@@ -1,7 +1,0 @@
-*/target/*
-target/*
-*.class
-*.jar
-output.txt
-.idea/*
-.DS_Store
