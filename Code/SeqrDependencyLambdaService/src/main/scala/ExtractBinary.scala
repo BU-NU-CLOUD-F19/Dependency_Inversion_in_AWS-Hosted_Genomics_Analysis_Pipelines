@@ -1,4 +1,4 @@
-package main.scala.example
+package seqrdependencylambdaservice
 
 import java.io.FileOutputStream
 import scala.language.postfixOps
